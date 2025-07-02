@@ -44,7 +44,9 @@ Then, we use the NVIDIA Compilation tool "cuobjdump" (https://docs.nvidia.com/cu
 
 Next, we modify the IADD's opcode "0x180" to an undocumented instruction's opcode "0x1C8". 
 
-Finally, we run the modified program /POC/undocumented instruction analysis//undocumented instruction analysis/a.exe. We can find that the result has been changed, and the program does not raise any error information.
+Finally, we run the modified program /POC/undocumented instruction analysis//undocumented instruction analysis/a.exe. We can find that the result has been changed, "{1,2,3,4,5}+{10,20,30,40,50}={-3,-2,-1,0,1}". 
+
+In addition, the program does not raise any error information, such as "illegal instruction".
 
 We provide an animation to present the above process. 
 
