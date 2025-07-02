@@ -38,53 +38,19 @@ From /POC/NVHI/result.cvs, we find several undocumented instructions and list th
 |  7   | 0x1CE  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
 |  8   | 0x1CF  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
 
-For example, we run the /POC/undocumented instruction analysis/a.exe, which uses an instruction "IADD R0, R2, R4  ;" to implement integer addition. And its result is shown in Fig. 1.
+For example, we run the /POC/undocumented instruction analysis//IADD/a.exe, which uses an instruction "IADD R0, R2, R4 ;" (machine code is 0x1800000000470200, and 0x180 is the opcode) to implement integer addition. And its result is "{1,2,3,4,5}+{10,20,30,40,50}={11,22,33,44,55}".
 
+Then, we use the NVIDIA Compilation tool "cuobjdump" (https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html#cuobjdump) to disassemble the above program a.exe. We can find that it uses an instruction "IADD R0, R2, R4 ;" (machine code is 0x1800000000470200, and 0x180 is the opcode) to implement integer addition. 
 
+Next, we modify the IADD's opcode "0x180" to an undocumented instruction's opcode "0x1C8". 
 
+Finally, we run the modified program /POC/undocumented instruction analysis//undocumented instruction analysis/a.exe. We can find that the result has been changed, and the program does not raise any error information.
 
+We provide an animation to present the above process. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(4) Step 4: Run the victim application again, and we can find that the result has been modified.
-
-```
-cd /POC/victim_app
-make
-./image_segment.o
-```
-
-![GPU2](https://github.com/uestc-cyberlab/gpu_kernel_hijack/blob/main/images/malicious.png)
-
-# <font size=5> Conclusion </font>
-
-In the end, we provide an animation to present the above attack process. We can find that our attack method is covert and able to cause malicious code execution.
-
-![GPU3](https://github.com/uestc-cyberlab/gpu_kernel_hijack/blob/main/images/animation.gif)
+![GPU3](https://github.com/uestc-cyberlab/gpu_undocumented_instruction/blob/main/POC/image/animation.gif)
 
 ## Contact
 
-We wrote a paper (A Novel Kernel Hijacking and Trojan Injection Method on Graphics Processing Units) to illustrate this vulnerability. Please contact zhangyang1003@std.uestc.edu.cn for any questions. 
+Please contact zhangyang1003@std.uestc.edu.cn for any questions. 
 
