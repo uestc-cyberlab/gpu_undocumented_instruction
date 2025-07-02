@@ -1,8 +1,8 @@
-# <center><font size=5> A Kernel Hijacking Vulnerability on NVIDIA GPUs</font></center>
+# <center><font size=5> An Instruction-Level Vulnerability on NVIDIA GPUs</font></center>
 
 ## <font size=5> I. Introduction</font>
 
-We found a kernel hijacking vulnerability on NVIDIA GPUs. Through manipulating the invocation mechanism of the CUDA driver functions, attackers can craft a disguised CUDA kernel loading API (**cuModuleLoad()**) to hijack the GPU kernel. With this vulnerability, attacks can implant malicious logic into the hijacked kernel, causing malicious code execution. 
+We find an instruction-level vulnerability on NVIDIA Pascal GPUs. Specifically, we apply our testing tool to NVIDIA GTX1050, and have found several undocumented instructions. These undocumented instructions do not belong to the official Pascal Instruction Set (https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html#maxwell-and-pascal-instruction-set), which means they are illegal instructions. However, these instructions can be executed on NVIDIA GPUs without raising any exception, and have strange functions. With this vulnerability, it can cause a calculation error. 
 
 ## <font size=5> II. Exploitation</font>
 
