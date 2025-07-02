@@ -4,50 +4,54 @@
 
 We find an instruction-level vulnerability on NVIDIA Pascal GPUs. Specifically, we apply our testing tool to NVIDIA GTX1050, and have found several undocumented instructions. These undocumented instructions do not belong to the official Pascal Instruction Set (https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html#maxwell-and-pascal-instruction-set), which means they are illegal instructions. However, these instructions can be executed on NVIDIA GPUs without raising any exception, and have strange functions. With this vulnerability, it can cause a calculation error. 
 
-## <font size=5> II. Exploitation</font>
+## <font size=5> II. Experiments</font>
 
-We provide a Proof of Concept (POC) to demonstrate this vulnerability. In the POC folder, we provide a GPU-based victim application and an attack tool to hijack the victim's GPU kernel.
+We provide a Proof of Concept (POC) to demonstrate this vulnerability. In the POC folder, we provide an undocumented instruction testing tool "NVHI".
 
 **Experimental Setup**
 
 | Operating System |              GPU Model              | CUDA Version |
 | :--------------: | :---------------------------------: | :----------: |
-|  Ubuntu 2022.04  | NVIDIA GTX1050 (Pascal Arch, SM_61) |     12.2     |
+|    Windows 10    | NVIDIA GTX1050 (Pascal Arch, SM_61) |     12.2     |
 
-**Reproduction Steps**
+**Undocumented Instruction Mining**
 
-(1) Step 1: Run the victim application. We provide an image processing case in /POC/victim_app.
-
-```
-cd /POC/victim_app
-make
-./image_segment.o
-```
-
-![GPU1](https://github.com/uestc-cyberlab/gpu_kernel_hijack/blob/main/images/reference.png)
-
-(2) Step 2: Compile the attack tool and generate a disguised CUDA kernel loading API (**cuModuleLoad()**). In the disguised API, we implant a Trojan into the hijacked kernel. In addition, we package the disguised API into a dynamic link library (image_hijack.so).
+Run the Python script /POC/NVHI/nvhi.py. This tool can generate testing instructions and identify undocumented instructions automatically. Finally, it will report the mining result in /POC/NVHI/result.csv.
 
 ```
-cd /POC/hijack_tool
-make
+cd /POC/NVHI
+python nvhi.py
 ```
 
-(3) Step 3: Manipulate the invocation mechanism of the dynamic link library (DLL), and preload the malicious API to replace the legitimate API call.
+**Undocumented Instruction Analysis**
 
-​	(3.1) Manipulate the DLL preloading environment variable (LD_PRELOAD), or
+From /POC/NVHI/result.cvs, we find several undocumented instructions and list them in the following table. Note that, the instruction length of NVIDIA Pascal GPUs is 64 bits, and the opcode bit field contains 51-63 bits.
 
-```
-LD_PRELOAD=./image_hijack.so
-```
+|  ID  | Opcode | Destination Register | Source Register | **Description** |
+| :--: | :----: | :------------------: | :-------------: | :-------------: |
+|  1   |        |                      |                 |                 |
 
-​	(3.2) Manipulate the DLL preloading configuration file (ld.so.preload).
 
-```
-cp image_hijack.so /usr/lib
-vim /etc/ld.so.preload
-/usr/lib/image_hijack.so
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (4) Step 4: Run the victim application again, and we can find that the result has been modified.
 
