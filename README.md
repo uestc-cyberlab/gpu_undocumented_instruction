@@ -38,7 +38,7 @@ From /POC/NVHI/result.cvs, we find several undocumented instructions and list th
 |  7   | 0x1CE  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
 |  8   | 0x1CF  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
 
-For example, we run the /POC/undocumented instruction analysis//IADD/a.exe, which uses an instruction "IADD R0, R2, R4 ;" (machine code is 0x1800000000470200, and 0x180 is the opcode) to implement integer addition. And its result is "{1,2,3,4,5}+{10,20,30,40,50}={11,22,33,44,55}".
+For example, we run the /POC/undocumented instruction analysis//IADD/a.exe, which implements integer addition. And its result is "{1,2,3,4,5}+{10,20,30,40,50}={11,22,33,44,55}".
 
 Then, we use the NVIDIA Compilation tool "cuobjdump" (https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html#cuobjdump) to disassemble the above program a.exe. We can find that it uses an instruction "IADD R0, R2, R4 ;" (machine code is 0x1800000000470200, and 0x180 is the opcode) to implement integer addition. 
 
