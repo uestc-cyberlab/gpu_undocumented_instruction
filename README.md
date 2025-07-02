@@ -27,9 +27,24 @@ python nvhi.py
 
 From /POC/NVHI/result.cvs, we find several undocumented instructions and list them in the following table. Note that, the instruction length of NVIDIA Pascal GPUs is 64 bits, and the opcode bit field contains 51-63 bits.
 
-|  ID  | Opcode | Destination Register | Source Register | **Description** |
-| :--: | :----: | :------------------: | :-------------: | :-------------: |
-|  1   |        |                      |                 |                 |
+|  ID  | Opcode |  Destination Register   |     Source Register      | **Description** |
+| :--: | :----: | :---------------------: | :----------------------: | :-------------: |
+|  1   | 0x1C8  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 4    |
+|  2   | 0x1CC  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 4    |
+|  3   | 0x1C9  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
+|  4   | 0x1CA  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
+|  5   | 0x1CB  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 4    |
+|  6   | 0x1CD  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 4    |
+|  7   | 0x1CE  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
+|  8   | 0x1CF  | Rx, x∈(0~255); 0-7 bits | Ry, y∈(0~255); 8-15 bits |    Rx=Ry - 5    |
+
+For example, we run the /POC/undocumented instruction analysis/a.exe, which uses an instruction "IADD R0, R2, R4  ;" to implement integer addition. And its result is shown in Fig. 1.
+
+
+
+
+
+
 
 
 
