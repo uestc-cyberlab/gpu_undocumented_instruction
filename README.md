@@ -40,9 +40,11 @@ From /POC/NVHI/result.cvs, we find several undocumented instructions and list th
 
 For example, (1) we run the /POC/undocumented instruction analysis//IADD/a.exe, which implements integer addition. And its result is "{1,2,3,4,5}+{10,20,30,40,50}={11,22,33,44,55}".
 
-Then, (2) we use the NVIDIA Compilation tool "cuobjdump" (https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html#cuobjdump) to disassemble the above program a.exe. We can find that it uses an instruction "IADD R0, R2, R4 ;" (machine code is 0x1800000000470200, and 0x180 is the opcode) to implement integer addition. 
+Then, (2) we use the NVIDIA Compilation tool "cuobjdump" (https://docs.nvidia.com/cuda/cuda-binary-utilities/index.html#cuobjdump) to disassemble the above program a.exe. We can find that it uses an instruction "IADD R0, R2, R4 ;" (machine code is 0x5c10000000470200, and 0x5c1 is the opcode) to implement integer addition. 
 
-Next, (3) we modify the IADD's opcode "0x180" to an undocumented instruction's opcode "0x1C8". 
+Next, (3) we modify the IADD's opcode "0x5c1" to an undocumented instruction's opcode "0x1C8". Specifically, we use a hex editor to modify this opcode, as shown in Fig. 1.
+
+![GPU3](https://github.com/uestc-cyberlab/gpu_undocumented_instruction/blob/main/POC/image/modify_opcode.png)
 
 Finally, (4) we run the modified program /POC/undocumented instruction analysis/undocumented instruction analysis/a.exe. We can find that the result has been changed, "{1,2,3,4,5}+{10,20,30,40,50}={-3,-2,-1,0,1}". 
 
